@@ -8,7 +8,7 @@ public interface EmployeesRepository {
 
 	public void save(Employee employee);
 
-	public Employee get(String employeeId);
+	public Employee get(String employeeEmail);
 
 	public List<Employee> list();
 

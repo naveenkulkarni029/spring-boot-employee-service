@@ -20,8 +20,8 @@ public class EmployeesServiceImpl implements EmployeesService{
 	}
 
 	@Override
-	public Employee get(String employeeId) {
-		return employeesRepository.get(employeeId);
+	public Employee get(String employeeEmail) {
+		return employeesRepository.get(employeeEmail);
 	}
 
 	@Override
