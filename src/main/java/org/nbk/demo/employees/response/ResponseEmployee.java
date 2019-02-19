@@ -8,6 +8,8 @@ public class ResponseEmployee {
 	private String employeeEmail;
 
 	private String phoneNumber;
+	
+	private ResponseAddress responseAddress;
 
 	public String getEmployeeName() {
 		return employeeName;
@@ -41,10 +43,18 @@ public class ResponseEmployee {
 		this.phoneNumber = phoneNumber;
 	}
 
+	public ResponseAddress getResponseAddress() {
+		return responseAddress;
+	}
+
+	public void setResponseAddress(ResponseAddress responseAddress) {
+		this.responseAddress = responseAddress;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Employee [employeeName=");
+		builder.append("ResponseEmployee [employeeName=");
 		builder.append(employeeName);
 		builder.append(", employeeAge=");
 		builder.append(employeeAge);
@@ -52,7 +62,11 @@ public class ResponseEmployee {
 		builder.append(employeeEmail);
 		builder.append(", phoneNumber=");
 		builder.append(phoneNumber);
+		builder.append(", responseAddress=");
+		builder.append(responseAddress);
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 }

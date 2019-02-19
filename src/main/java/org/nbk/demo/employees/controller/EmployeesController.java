@@ -3,8 +3,10 @@ package org.nbk.demo.employees.controller;
 import org.nbk.demo.employees.domain.Employee;
 import org.nbk.demo.employees.response.ResponseEmployees;
 import org.nbk.demo.employees.response.ResponseCreated;
+import org.nbk.demo.employees.response.ResponseEmployee;
 import org.nbk.demo.employees.service.EmployeesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +28,13 @@ public class EmployeesController {
 	}
 
 	@GetMapping(value = "/employees/get/{employeeEmail}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Employee> get(@PathVariable String employeeEmail) {
-		return ResponseEntity.ok(employeeService.get(employeeEmail));
+	public ResponseEntity<ResponseEmployee> get(@PathVariable String employeeEmail) {
+		ResponseEmployee responseEmployee = employeeService.get(employeeEmail);
+		if(responseEmployee.getResponseAddress()!=null)
+		return ResponseEntity.ok(responseEmployee);
+		else {
+			return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).body(responseEmployee);
+		}
 	}
 
 	@GetMapping(value = "/employees/list", consumes = MediaType.APPLICATION_JSON_VALUE)
