@@ -14,6 +14,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -39,13 +42,18 @@ public class EmployeesServiceImpl implements EmployeesService{
 		RestTemplate restTemplate = new RestTemplate(); 
 		String url = "http://localhost:8090/employees/address/get/"+employee.getEmployeeEmail();
 		try {
-		ResponseEntity<ResponseAddress> responseAddress = restTemplate.exchange(url, HttpMethod.GET, entity, ResponseAddress.class);
-		if(responseAddress.getStatusCode().is2xxSuccessful())
-			responseEmployee.setResponseAddress(responseAddress.getBody());
-		if(responseAddress.getStatusCode().is4xxClientError())
-			System.out.println("CLient side error");
+		ResponseEntity<ResponseAddress> responseAddress = restTemplate.exchange(url, HttpMethod.POST, entity, ResponseAddress.class);
+		responseEmployee.setResponseAddress(responseAddress.getBody());
 		}catch(Exception ex) {
-			System.out.println("Hello");
+			if(ex instanceof HttpClientErrorException) {
+				System.out.println("client error");
+			}
+			if(ex instanceof HttpServerErrorException) {
+				System.out.println("server error");
+			}
+			if(ex instanceof HttpRequestMethodNotSupportedException) {
+				System.out.println("method not supported error");
+			}
 		}
 		return responseEmployee;
 	}
